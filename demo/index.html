@@ -16,7 +16,7 @@
             position: relative;
             height: 100%;
             margin: 5px;
-            padding-top: 5px;
+            padding-top: 15px;
         }
 
         .info{
@@ -42,9 +42,36 @@
                 white-space: pre;
                 word-wrap: normal;
         }
+
+        .githubBtn{
+            position: absolute;
+            right:8px;
+            top:5px;
+            z-index: 999999;
+            display: inline-block;
+            padding: .5rem 1.25rem;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+            background-color: #3072b3;
+            background-repeat: repeat-x;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #599bdc), color-stop(100%, #3072b3));
+            background-image: -webkit-linear-gradient(top, #599bdc 0, #3072b3 100%);
+            background-image: -moz-linear-gradient(top, #599bdc 0, #3072b3 100%);
+            background-image: -ms-linear-gradient(top, #599bdc 0, #3072b3 100%);
+            background-image: -o-linear-gradient(top, #599bdc 0, #3072b3 100%);
+            background-image: linear-gradient(top, #599bdc 0, #3072b3 100%);
+            border: 1px solid #2967a4;
+            border-radius: 6px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+            transform:scale(0.8);
+            transform-origin: 100% 50%;
+        }
     </style>
 </head>
 <body>
+    <a href="https://github.com/06wj/shaderViewer" class="githubBtn">View on GitHub</a>
     <div class='main'>
         <div class='info'>Pleae type the shader code here</div>
         <textarea id='code'>
