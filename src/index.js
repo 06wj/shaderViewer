@@ -30,14 +30,22 @@ const app = {
     },
     show(){
         const preCode = this.codeElem.value;
-        this.compiler(preCode, (error, code) => {
-            if(code){
-                code = this.beautify(code);
+        if(preCode){
+            this.compiler(preCode, (error, code) => {
+                if(error){
+                    code = `//${error}\n` + preCode; 
+                }
+                else{
+                    code = this.beautify(code);
+                }
                 code = '\n' + code;
                 const html = Prism.highlight(code, Prism.languages.glsl, 'glsl');
                 this.viewElem.innerHTML = html;
-            }
-        });
+            });
+        }
+        else{
+            this.viewElem.innerHTML = '';
+        }
     },
     init(){
         const codeElem = this.codeElem = document.getElementById('code');
