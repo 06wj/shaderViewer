@@ -9,7 +9,6 @@
     "babel-preset-env": "^1.7.0",
     "events": "^3.0.0",
     "js-beautify": "^1.7.5",
-    "kindred-shader-formatter": "^1.0.1",
     "prismjs": "^1.14.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.10.2",
@@ -17,6 +16,8 @@
   },
   "devDependencies": {},
   "scripts": {
+    "dev": "webpack -w --env.development",
+    "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "06wj",

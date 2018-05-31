@@ -11,19 +11,24 @@ const path = require('path');
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-module.exports = {
-	entry: './src/index',
+module.exports = function(env, argv) {
+	const isDev = !!env;
+	const mode = isDev ? 'development' : 'production'; 
 
-	mode: 'production',
+	console.log(`webpack-mode:${mode}`);
 
-	output: {
-		filename: '[name].bundle.js',
-		path: path.resolve(__dirname, 'dist')
-	},
+	return {
+		entry: './src/index',
 
-	module: {
-		rules: [
-			{
+		mode: mode,
+
+		output: {
+			filename: '[name].bundle.js',
+			path: path.resolve(__dirname, 'dist')
+		},
+
+		module: {
+			rules: [{
 				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
@@ -31,10 +36,10 @@ module.exports = {
 				options: {
 					presets: ['env']
 				}
-			}
-		]
-	},
+			}]
+		},
 
-	plugins: [new UglifyJSPlugin()],
+		plugins: [new UglifyJSPlugin()],
 
+	}
 };
