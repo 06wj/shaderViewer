@@ -1,7 +1,5 @@
 import jsbeautifier from 'js-beautify';
-var Prism = require('prismjs');
-var loadLanguages = require('prismjs/components/index.js');
-loadLanguages(['glsl']);
+var Prism = require('../lib/prism.js');
 
 import {
     Compiler
