@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shader Viewer</title>
+    <link rel="stylesheet" href="../lib/prism.css">
+    <style>
+        html, body{
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .main{
+            position: relative;
+            height: 100%;
+            margin: 5px;
+            padding-top: 5px;
+        }
+
+        .info{
+            text-align: left;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        #view{
+            padding-right: 0;
+        }
+
+        #code{
+                width: 100%;
+                height: 30%;
+                padding: 1em;
+                box-sizing: border-box;
+                background: #f5f2f0;
+                color: black;
+                text-shadow: 0 1px white;
+                tab-size: 4;
+                font: 100% Consolas, Monaco, monospace;
+                white-space: pre;
+                word-wrap: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class='main'>
+        <div class='info'>Pleae type shader code here</div>
+        <textarea id='code'>
+#define PRECISION highp
+#define HAS_UV 1;
+precision PRECISION float;
+attribute vec3 a_position;
+uniform mat4 u_modelViewProjectionMatrix;
+#ifdef HAS_UV
+    attribute vec2 a_texcoord0;
+    varying vec2 v_texcoord0;
+#endif
+void main(void) {
+    #ifdef HAS_UV
+        vec2 uv = a_texcoord0;
+        v_texcoord0 = uv;
+    #endif
+    gl_Position = u_modelViewProjectionMatrix * vec4(a_position, 1.0);
+}</textarea>
+        <pre id='view' class='language-glsl'>
+            <code id='codeView' class='language-glsl'></code>
+        </pre>
+    </div>
+    <script src='../dist/main.bundle.js'></script>
+</body>
+</html>
