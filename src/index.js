@@ -25,7 +25,7 @@ const app = {
     },
     beautify(code){
         code = code.replace(/#([\w]+)\s/g, '$$$1$$ ');
-        code = jsbeautifier(code).replace(/\$([\w]+)\$/g, '#$1');
+        code = jsbeautifier(code).replace(/\$([\w]+)\$/g, '#$1').replace(/\n\n+/g, '\n');
         return code;
     },
     show(){
