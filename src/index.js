@@ -24,7 +24,9 @@ const app = {
         compiler.compile(code);
     },
     beautify(code){
-        return jsbeautifier(code);
+        code = code.replace(/#([\w]+)\s/g, '$$$1$$ ');
+        code = jsbeautifier(code).replace(/\$([\w]+)\$/g, '#$1');
+        return code;
     },
     show(){
         const preCode = this.codeElem.value;
