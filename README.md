@@ -4,7 +4,7 @@ Preprocess and format the shader code.
 ### demo
 [https://06wj.github.io/shaderViewer/demo/](https://06wj.github.io/shaderViewer/demo/)
 
-![](https://gw.alicdn.com/tfs/TB1lkmzuL1TBuNjy0FjXXajyXXa-1170-1254.png)
+![](https://gw.alicdn.com/tfs/TB1lkmzuL1TBuNjy0FjXXajyXXa-1170-1254.png_600x600.jpg)
 
 ### dev
 * run `npm install` to install dependencies
