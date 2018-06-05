@@ -36,32 +36,57 @@ function insertScript(url) {
 };
 
 const code = `
-const _shaderViewerExtensionsGlobal = {};
+const _shaderViewerExtensionsGlobal = {
+    programs:{}
+};
 (function(){
-    const shaders = _shaderViewerExtensionsGlobal.shaders = {};
-    let num = 0;
-
-    const injectShaderSource = function(shader, code){
-        shaders[num ++] = code;
+    const programs = _shaderViewerExtensionsGlobal.programs;
+    let uid = 0;
+    
+    const SHADER_TYPES = {
+        35633:'VERTEX',
+        35632:'FRAGMENT'
     };
 
-    if(typeof HTMLCanvasElement === 'function'){
-        if(typeof WebGLRenderingContext === 'function'){
-            const originShaderSource = WebGLRenderingContext.prototype.shaderSource;
-            WebGLRenderingContext.prototype.shaderSource = function(shader, code){
-                injectShaderSource.call(this, shader, code);
-                return originShaderSource.call(this, shader, code);
-            };
-        }
+    const injectLinkProgram = function(program){
+        const gl = this;
+        const programInfo = {};
+        let shaderName = 'program';
+        try{
+            const shaders = gl.getAttachedShaders(program);
+            for(let i = 0;i < shaders.length;i ++){
+                const shader = shaders[i];
+                const source = gl.getShaderSource(shader);
+                const type = SHADER_TYPES[gl.getShaderParameter(shader, gl.SHADER_TYPE)];
+                programInfo[type] = source;
 
-        if(typeof WebGL2RenderingContext === 'function'){
-            const originShaderSource = WebGL2RenderingContext.prototype.shaderSource;
-            WebGL2RenderingContext.prototype.shaderSource = function(shader, code){
-                injectShaderSource.call(this, shader, code);
-                return originShaderSource.call(this, shader, code);
+                let matchRes = source.match(/#define SHADER_NAME\\s+([\\w]+)/);
+                if(matchRes && matchRes[1]){
+                    shaderName = matchRes[1];
+                }
+            }
+            
+            uid ++;
+            programs[shaderName + '_' + uid] = programInfo;
+        }
+        catch(e){
+            console.warn('injectLinkProgramError', e);
+        }
+    };
+
+    function injectGLFunction(contextName){
+        const WebGLRenderingContext = window[contextName];
+        if(typeof WebGLRenderingContext === 'function'){
+            const originLinkProgram = WebGLRenderingContext.prototype.linkProgram;
+            WebGLRenderingContext.prototype.linkProgram = function(program){
+                injectLinkProgram.call(this, program);
+                return originLinkProgram.call(this, program);
             };
         }
     }
+    
+    injectGLFunction('WebGLRenderingContext');
+    injectGLFunction('WebGL2RenderingContext');
 })();
 `;
 
