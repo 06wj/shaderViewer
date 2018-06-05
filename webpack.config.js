@@ -18,13 +18,16 @@ module.exports = function(env, argv) {
 	console.log(`webpack-mode:${mode}`);
 
 	return {
-		entry: './src/index',
+		entry: {
+			'dist/main':'./src/index',
+			'extensions/js/result':'./extensions/js/result'
+		},
 
 		mode: mode,
 
 		output: {
 			filename: '[name].bundle.js',
-			path: path.resolve(__dirname, 'dist')
+			path: path.resolve(__dirname, '')
 		},
 
 		module: {
@@ -39,7 +42,8 @@ module.exports = function(env, argv) {
 			}]
 		},
 
-		plugins: [new UglifyJSPlugin()],
+		plugins: [],
+		devtool:'source-map'
 
 	}
 };

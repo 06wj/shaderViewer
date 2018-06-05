@@ -1,4 +1,5 @@
 console.log('ShaderViewer init');
+
 function insertTextScript(text) {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -25,7 +26,7 @@ function insertHeaderNode(node) {
 function insertScript(url) {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    
+
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, false);
     xhr.send('');
@@ -91,3 +92,32 @@ const _shaderViewerExtensionsGlobal = {
 `;
 
 insertTextScript(code);
+
+
+window.addEventListener("message", function(e) {
+    const data = e.data;
+    if (data.type === 'SHADER_VIEWER') {
+        chrome.runtime.sendMessage(data, function(response) {
+
+        });
+    }
+}, false);
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.type == 'SHADER_VIEWER') {
+        const data = request.data;
+        switch(data.type){
+            case 'GET_SHADER':
+                insertTextScript(`
+                    window.postMessage({
+                        type: 'SHADER_VIEWER',
+                        data:{
+                            type:'OPEN_VIEWER',
+                            data:_shaderViewerExtensionsGlobal
+                        }
+                    }, '*');
+                `);
+                break;
+        }
+    }
+});
