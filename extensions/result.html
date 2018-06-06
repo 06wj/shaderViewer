@@ -12,26 +12,61 @@
             margin: 0;
             background-color: #111;
         }
-    
+
+        ul, li{
+            padding: 0px;
+            margin: 0px;
+        }
+
         .main{
-            position: relative;
+            width: 100%;
             height: 100%;
-            margin: 5px;
+        }
+    
+        .codeMain{
+            float: left;
+            width: 80%;
+            height: 100%;
+            position: relative;
             padding-top: 15px;
         }
 
-        #code{
-                width: 100%;
-                height: 285px;
-                padding: 5px;
-                box-sizing: border-box;
-                background: #f5f2f0;
-                color: black;
-                text-shadow: 0 1px white;
-                tab-size: 4;
-                font: 14px Consolas, Monaco, monospace;
-                white-space: pre;
-                word-wrap: normal;
+        .codeMain .view{
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom:20px;
+        }
+
+        .codeMain .title{
+            color:#ddd;
+            text-align: center;
+            width: 100%;
+            font-size: 24px;
+        }
+
+        .menu{
+            float: left;
+            width: 15%;
+            list-style-type: none;
+            margin-top:50px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .menu li{
+            color:#eee;
+            font-size: 14px;
+            line-height: 35px;
+            height: 35px;
+            background-color: #666;
+            text-align: center;
+            margin-bottom: 5px;
+            border-radius: 0px 5px 5px 0px;
+        }
+
+        .menu li.active{
+            background-color: #eee;
+            color:#000;
         }
 
         .githubBtn{
@@ -63,10 +98,24 @@
 </head>
 <body>
     <a href="https://github.com/06wj/shaderViewer" target="_blank" class="githubBtn">View on GitHub</a>
-    <div class='main'>        
-        <pre id='view' class='language-glsl'>
-            <code id='codeView' class='language-glsl'></code>
-        </pre>
+    <div class='main'>
+        <ul class='menu' id='menu'>
+            
+        </ul>
+        <div class='codeMain'>        
+            <div class='view'>
+                <div class='title'>vertex shader</div>
+                <pre class='language-glsl'>
+                    <code id='codeViewVert' class='codeView language-glsl'></code>
+                </pre>
+            </div>
+            <div class='view'>
+                <div class='title'>fragment shader</div>
+                <pre class='language-glsl'>
+                    <code id='codeViewFrag' class='codeView language-glsl'></code>
+                <pre>
+            </div>
+        </div>
     </div>
     <script src='js/result.bundle.js'></script>
 </body>

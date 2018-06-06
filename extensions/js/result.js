@@ -2,17 +2,52 @@ import compiler from '../../src/compiler';
 import exprEval from '@nbxx/nb-expr-eval';
 
 const app = {
-    show(preCode){
-        compiler.parseHighlight(preCode, (error, code) => {
-            this.viewElem.innerHTML = code;
-        });
+    show(elem){
+        if(this.currentElem !== elem){
+            if(this.currentElem){
+                this.currentElem.className = '';
+            }
+
+            const name = elem.getAttribute('data-name');
+            const program = programs[name];
+
+            compiler.parseHighlight(program.VERTEX, (error, code) => {
+                this.viewElemVert.innerHTML = code;
+            });
+
+            compiler.parseHighlight(program.FRAGMENT, (error, code) => {
+                this.viewElemFrag.innerHTML = code;
+            });
+
+            this.currentElem = elem;
+            this.currentElem.className = 'active';
+        }
     },
     init(){
         this._injectEval();
-        const viewElem = this.viewElem = document.getElementById('codeView');        
-        const programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
-        const keys = Object.keys(programs);
-        this.show(programs[keys[0]].VERTEX);
+        const viewElemVert = this.viewElemVert = document.getElementById('codeViewVert');        
+        const viewElemFrag = this.viewElemFrag = document.getElementById('codeViewFrag');       
+        const programs = window.programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
+        const names = this.names = Object.keys(programs);
+        console.log('programs:', programs);
+        this.initMenu();
+    },
+    initMenu(){
+        const menuElem = document.getElementById('menu');
+        const names = this.names;
+        const elems = this.elems = [];
+        names.forEach(name => {
+            const elem = document.createElement('li');
+            elem.innerHTML = name;
+            elem.setAttribute('data-name', name);
+            elem.addEventListener('click', () => {
+                this.show(elem);
+            });
+            elems.push(elem);
+            menuElem.appendChild(elem);
+        });
+
+        this.show(elems[0]);
     },
     _injectEval(){
         const Parser = exprEval.Parser;

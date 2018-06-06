@@ -107,19 +107,56 @@ var _nbExprEval2 = _interopRequireDefault(_nbExprEval);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = {
-    show: function show(preCode) {
+    show: function show(elem) {
         var _this = this;
 
-        _compiler2.default.parseHighlight(preCode, function (error, code) {
-            _this.viewElem.innerHTML = code;
-        });
+        if (this.currentElem !== elem) {
+            if (this.currentElem) {
+                this.currentElem.className = '';
+            }
+
+            var name = elem.getAttribute('data-name');
+            var program = programs[name];
+
+            _compiler2.default.parseHighlight(program.VERTEX, function (error, code) {
+                _this.viewElemVert.innerHTML = code;
+            });
+
+            _compiler2.default.parseHighlight(program.FRAGMENT, function (error, code) {
+                _this.viewElemFrag.innerHTML = code;
+            });
+
+            this.currentElem = elem;
+            this.currentElem.className = 'active';
+        }
     },
     init: function init() {
         this._injectEval();
-        var viewElem = this.viewElem = document.getElementById('codeView');
-        var programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
-        var keys = Object.keys(programs);
-        this.show(programs[keys[0]].VERTEX);
+        var viewElemVert = this.viewElemVert = document.getElementById('codeViewVert');
+        var viewElemFrag = this.viewElemFrag = document.getElementById('codeViewFrag');
+        var programs = window.programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
+        var names = this.names = Object.keys(programs);
+        console.log('programs:', programs);
+        this.initMenu();
+    },
+    initMenu: function initMenu() {
+        var _this2 = this;
+
+        var menuElem = document.getElementById('menu');
+        var names = this.names;
+        var elems = this.elems = [];
+        names.forEach(function (name) {
+            var elem = document.createElement('li');
+            elem.innerHTML = name;
+            elem.setAttribute('data-name', name);
+            elem.addEventListener('click', function () {
+                _this2.show(elem);
+            });
+            elems.push(elem);
+            menuElem.appendChild(elem);
+        });
+
+        this.show(elems[0]);
     },
     _injectEval: function _injectEval() {
         var Parser = _nbExprEval2.default.Parser;
