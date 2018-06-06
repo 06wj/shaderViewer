@@ -7,7 +7,7 @@ Preprocess and format the shader code.
 ![](https://gw.alicdn.com/tfs/TB1lkmzuL1TBuNjy0FjXXajyXXa-1170-1254.png_600x600.jpg)
 
 ### chrome extensions
-[extensions.crx](https://github.com/06wj/shaderViewer/tree/dev/extensions/extensions.crx)
+[chrome extensions.crx](https://github.com/06wj/shaderViewer/blob/dev/extensions/extensions.crx?raw=true)
 
 ### dev
 * run `npm install` to install dependencies
