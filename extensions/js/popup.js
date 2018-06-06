@@ -35,6 +35,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     if(data && data.programs && Object.keys(data.programs).length > 0){
                         openViewer(data.programs);
                     }
+                    else{
+                        alert('no shader detect!')
+                    }
                     break;
             }
         }

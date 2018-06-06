@@ -4,12 +4,8 @@
     "version": "0.1",
     "description": "Preprocess and format the shader code.",
     "permissions": [
-        "activeTab", "tabs"
+        "activeTab"
     ],
-    "background": {
-        "scripts": ["js/background.js"],
-        "persistent": false
-    },
     "browser_action": {
         "default_popup": "popup.html",
         "default_icon": {
