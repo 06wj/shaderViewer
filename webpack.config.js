@@ -17,9 +17,13 @@ module.exports = function(env, argv) {
 
 	console.log(`webpack-mode:${mode}`);
 
+	const plugins = isDev?[]:[new UglifyJSPlugin()];
+	const devtool = isDev?'none':'cheap-source-map';
+	
 	return {
 		entry: {
 			'dist/main':'./src/index',
+			'dist/compiler':'./src/compiler',
 			'extensions/js/result':'./extensions/js/result'
 		},
 
@@ -42,8 +46,8 @@ module.exports = function(env, argv) {
 			}]
 		},
 
-		plugins: [],
-		devtool:'source-map'
+		plugins: plugins,
+		devtool:devtool
 
 	}
 };

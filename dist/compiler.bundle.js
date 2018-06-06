@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/compiler.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -6864,51 +6864,6 @@ var compiler = {
 };
 
 exports.default = compiler;
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _compiler = __webpack_require__(/*! ./compiler */ "./src/compiler.js");
-
-var _compiler2 = _interopRequireDefault(_compiler);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var app = {
-    show: function show() {
-        var _this = this;
-
-        var preCode = this.codeElem.value;
-        _compiler2.default.parseHighlight(preCode, function (error, code) {
-            _this.viewElem.innerHTML = code;
-        });
-    },
-    init: function init() {
-        var codeElem = this.codeElem = document.getElementById('code');
-        var viewElem = this.viewElem = document.getElementById('codeView');
-
-        this.bindEvent();
-        this.show();
-    },
-    bindEvent: function bindEvent() {
-        var _this2 = this;
-
-        this.codeElem.oninput = function () {
-            _this2.show();
-        };
-    }
-};
-
-app.init();
 
 /***/ })
 
