@@ -10,14 +10,16 @@ const app = {
 
             const name = elem.getAttribute('data-name');
             const program = programs[name];
-
+            const options = {
+                ignoreConstantError:true
+            };
             compiler.parseHighlight(program.VERTEX, (error, code) => {
                 this.viewElemVert.innerHTML = code;
-            });
+            }, options);
 
             compiler.parseHighlight(program.FRAGMENT, (error, code) => {
                 this.viewElemFrag.innerHTML = code;
-            });
+            }, options);
 
             this.currentElem = elem;
             this.currentElem.className = 'active';

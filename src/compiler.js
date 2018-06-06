@@ -32,7 +32,7 @@ const compiler = {
 
         return Prism.highlight(code, Prism.languages.glsl, 'glsl');
     },
-    parse(preCode, callback){
+    parse(preCode, callback, options = {}){
         if(preCode){
             this.preprocess(preCode, (error, code) => {
                 if(error){
@@ -42,17 +42,17 @@ const compiler = {
                     code = this.beautify(code);
                 }
                 callback(error, code);                
-            });
+            }, options);
         }
         else{
             callback(null, '');
         }
     },
-    parseHighlight(preCode, callback){
+    parseHighlight(preCode, callback, options){
         this.parse(preCode, (error, code) => {
             const hightlightCode = this.hightlight(code);
             callback(error, hightlightCode);
-        });
+        }, options);
     }
 };
 
