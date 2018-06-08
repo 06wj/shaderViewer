@@ -16,7 +16,8 @@ const shake = {
         }
         catch(e){
             console.warn('shakeError:', e);
-            return code;
+
+            return `// ${e.name}: @line:${e.location.start.line},column:${e.location.start.column}\n// ${e.message}\n${code}`;
         }
     },
     _shakeFunction(ast) {
@@ -81,30 +82,28 @@ const shake = {
         });
 
         const usedTypeDict = {};
-        glsl.query.all(ast, glsl.query.selector('function_declaration')).forEach(functionDefNode => {
-            const parameters = functionDefNode.parameters;
-            if(parameters){
-                parameters.forEach(parameterNode => {
-                    const type_name = parameterNode.type_name;
-                    usedTypeDict[type_name] = true;
-                    const members = this._getMembers(structInfoDict, type_name);
-                    for(let name in members){
-                        usedTypeDict[name] = true;
-                    }
-                });
-            }
 
-            glsl.query.all(functionDefNode, glsl.query.selector('declarator')).forEach(declaratorNode => {
-                const typeAttribute = declaratorNode.typeAttribute;
-                if(typeAttribute){
-                    const name = typeAttribute.name;
-                    usedTypeDict[name] = true;
-                    const members = this._getMembers(structInfoDict, name);
-                    for(let name in members){
-                        usedTypeDict[name] = true;
-                    }
-                }
-            });
+        const globalDeclaratorResult = glsl.query.all(ast, glsl.query.selector('root > declarator[typeAttribute]'));
+        const functionDeclaratorResult = glsl.query.all(ast, glsl.query.selector('function_declaration declarator[typeAttribute]'));
+        const parameterResult = glsl.query.all(ast, glsl.query.selector('function_declaration > parameter'));
+        
+        globalDeclaratorResult.concat(functionDeclaratorResult).forEach(declaratorNode => {
+            const typeAttribute = declaratorNode.typeAttribute;
+            const name = typeAttribute.name;
+            usedTypeDict[name] = true;
+            const members = this._getMembers(structInfoDict, name);
+            for(let name in members){
+                usedTypeDict[name] = true;
+            }
+        });
+
+        parameterResult.forEach(parameterNode => {
+            const type_name = parameterNode.type_name;
+            usedTypeDict[type_name] = true;
+            const members = this._getMembers(structInfoDict, type_name);
+            for(let name in members){
+                usedTypeDict[name] = true;
+            }
         });
 
         for(let name in structInfoDict){
