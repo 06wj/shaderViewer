@@ -1,6 +1,11 @@
 # ShaderViewer
 Preprocess and format the shader code.
 
+### Feature
+* Preprocess directives,  ```#define```, ```#if```, ```#elif```, ```#endif```, ```#if defined``` ... 
+* Remove unused function, struct...
+* Format
+
 ### demo
 [https://06wj.github.io/shaderViewer/demo/](https://06wj.github.io/shaderViewer/demo/)
 
