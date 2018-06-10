@@ -1,0 +1,45 @@
+{
+    "extends": "airbnb-base",
+    "env": {
+        "browser": true,
+        "node": true,
+        "mocha": true,
+        "es6": true
+    },
+    "rules": {
+        "prefer-const": 0,
+        "no-plusplus": 0,
+        "indent": ["error", 4, {
+            "SwitchCase": 1
+        }],
+        "padded-blocks": 0,
+        "eol-last": 0,
+        "class-methods-use-this": 0,
+        "global-require": 0,
+        "prefer-template": 0,
+        "no-underscore-dangle": 0,
+        "arrow-parens": 0,
+        "arrow-body-style": 0,
+        "no-shadow": 0,
+        "no-useless-return": 0,
+        "no-param-reassign": 0,
+        "no-this-before-super": 0,
+        "no-mixed-operators": 0,
+        "no-multi-assign": 0,
+        "no-console": 0,
+        "no-bitwise": 0,
+        "max-len": 0,
+        "one-var": 0,
+        "guard-for-in": 0,
+        "no-restricted-syntax": 0,
+        "no-floating-decimal": 0,
+        "comma-dangle": 0,
+        "no-continue": 0,
+        "func-names": 0,
+        "space-in-parens": 0,
+        "no-trailing-spaces": 0,
+        "prefer-rest-params": 0,
+        "prefer-spread": 0,
+        "space-before-function-paren": ["error", "never"]
+    }
+}

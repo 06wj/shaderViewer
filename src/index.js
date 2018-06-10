@@ -4,8 +4,8 @@ const app = {
     show() {
         const preCode = this.codeElem.value;
         const options = {
-            ignoreConstantError:false,
-            removeUnused:true
+            ignoreConstantError: false,
+            removeUnused: true
         };
 
         compiler.parseHighlight(preCode, (error, code) => {
@@ -13,8 +13,8 @@ const app = {
         }, options);
     },
     init() {
-        const codeElem = this.codeElem = document.getElementById('code');
-        const viewElem = this.viewElem = document.getElementById('codeView');
+        this.codeElem = document.getElementById('code');
+        this.viewElem = document.getElementById('codeView');
 
         this.bindEvent();
         this.show();

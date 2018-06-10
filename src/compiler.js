@@ -1,5 +1,5 @@
 import jsbeautifier from 'js-beautify';
-import Prism from '../lib/prism.js';
+import Prism from '../lib/prism';
 import {
     Compiler
 } from '../lib/compiler';
@@ -19,56 +19,52 @@ const compiler = {
             }
         }, options));
 
-        compiler.once('error', function(msg) {
-            callback && callback(msg, null);
+        compiler.once('error', (msg) => {
+            callback(msg, null);
         });
 
-        compiler.once('success', function(result) {
-            callback && callback(null, result);
+        compiler.once('success', (result) => {
+            callback(null, result);
         });
 
         compiler.compile(code);
     },
-    beautify(code){
+    beautify(code) {
         code = code.replace(/#([\w]+)\s/g, '$$$1$$ ').replace(/^\s+/g, '');
         code = jsbeautifier(code).replace(/\$([\w]+)\$/g, '#$1').replace(/\n\n+/g, '\n');
         return code;
     },
-    removeUnused(code){
+    removeUnused(code) {
         const options = {
-            function:true,
-            struct:true
+            function: true,
+            struct: true
         };
 
         return shake.shake(code, options);
     },
-    hightlight(code){
+    hightlight(code) {
         code = '\n' + code;
 
         return Prism.highlight(code, Prism.languages.glsl, 'glsl');
     },
-    parse(preCode, callback, options = {}){
-        if(preCode){
+    parse(preCode, callback, options = {}) {
+        if (preCode) {
             this.preprocess(preCode, (error, code) => {
-                if(error){
-                    code = `//${error}\n` + preCode; 
+                if (error) {
+                    code = `//${error}\n` + preCode;
+                } else if (options.removeUnused) {
+                    code = this.removeUnused(code);
+                } else {
+                    code = this.beautify(code);
                 }
-                else{
-                    if(options.removeUnused){
-                        code = this.removeUnused(code);
-                    }
-                    else{
-                        code = this.beautify(code);
-                    }
-                }
-                callback(error, code);                
+
+                callback(error, code);
             }, options);
-        }
-        else{
+        } else {
             callback(null, '');
         }
     },
-    parseHighlight(preCode, callback, options){
+    parseHighlight(preCode, callback, options) {
         this.parse(preCode, (error, code) => {
             const hightlightCode = this.hightlight(code);
             callback(error, hightlightCode);

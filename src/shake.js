@@ -2,7 +2,7 @@ import glsl from 'glsl-man';
 
 const shake = {
     shake(code, option = {}) {
-        try{
+        try {
             const ast = glsl.parse(code);
             if (option.function) {
                 this._shakeFunction(ast);
@@ -13,8 +13,7 @@ const shake = {
             }
 
             return glsl.string(ast);
-        }
-        catch(e){
+        } catch (e) {
             console.warn('shakeError:', e);
 
             return `// ${e.name}: @line:${e.location.start.line},column:${e.location.start.column}\n// ${e.message}\n${code}`;
@@ -42,7 +41,7 @@ const shake = {
         });
 
         const mainFuncInfo = funcInfoDict.main;
-        if(mainFuncInfo){
+        if (mainFuncInfo) {
             mainFuncInfo.called.forEach(name => {
                 calledFunc[name] = true;
                 const funcInfo = funcInfoDict[name];
@@ -54,7 +53,7 @@ const shake = {
             });
         }
 
-        for (name in funcInfoDict) {
+        for (let name in funcInfoDict) {
             const info = funcInfoDict[name];
             if (info && !calledFunc[name]) {
                 info.nodes.forEach(node => {
@@ -89,38 +88,38 @@ const shake = {
         const globalDeclaratorResult = glsl.query.all(ast, glsl.query.selector('root > declarator[typeAttribute]'));
         const functionDeclaratorResult = glsl.query.all(ast, glsl.query.selector('function_declaration declarator[typeAttribute]'));
         const parameterResult = glsl.query.all(ast, glsl.query.selector('function_declaration > parameter'));
-        
+
         globalDeclaratorResult.concat(functionDeclaratorResult).forEach(declaratorNode => {
             const typeAttribute = declaratorNode.typeAttribute;
             const name = typeAttribute.name;
             usedTypeDict[name] = true;
             const members = this._getMembers(structInfoDict, name);
-            for(let name in members){
+            for (let name in members) {
                 usedTypeDict[name] = true;
             }
         });
 
         parameterResult.forEach(parameterNode => {
-            const type_name = parameterNode.type_name;
-            usedTypeDict[type_name] = true;
-            const members = this._getMembers(structInfoDict, type_name);
-            for(let name in members){
+            const typeName = parameterNode.type_name;
+            usedTypeDict[typeName] = true;
+            const members = this._getMembers(structInfoDict, typeName);
+            for (let name in members) {
                 usedTypeDict[name] = true;
             }
         });
 
-        for(let name in structInfoDict){
+        for (let name in structInfoDict) {
             const structInfo = structInfoDict[name];
-            if(structInfo && !usedTypeDict[name]){
+            if (structInfo && !usedTypeDict[name]) {
                 glsl.mod.remove(structInfo.node);
             }
         }
     },
-    _getMembers(structInfoDict, name){
+    _getMembers(structInfoDict, name) {
         const structInfo = structInfoDict[name];
-        if(structInfo){
-            const members = structInfo.members; 
-            for(let name in members){
+        if (structInfo) {
+            const members = structInfo.members;
+            for (let name in members) {
                 Object.assign(members, this._getMembers(structInfoDict, name));
             }
             return members;

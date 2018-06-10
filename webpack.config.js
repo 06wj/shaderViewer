@@ -13,18 +13,21 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = function(env, argv) {
 	const isDev = !!env;
-	const mode = isDev ? 'development' : 'production'; 
+	const mode = isDev ? 'development' : 'production';
 
 	console.log(`webpack-mode:${mode}`);
 
-	const plugins = isDev?[]:[new UglifyJSPlugin()];
-	const devtool = isDev?'none':'cheap-source-map';
-	
+	const devtool = isDev ? 'none' : 'cheap-source-map';
+	const plugins = [];
+	if(!isDev){
+		plugins.push(new UglifyJSPlugin())
+	}
+
 	return {
 		entry: {
-			'dist/main':'./src/index',
-			'dist/compiler':'./src/compiler',
-			'extensions/js/result':'./extensions/js/result'
+			'dist/main': './src/index',
+			'dist/compiler': './src/compiler',
+			'extensions/js/result': './extensions/js/result'
 		},
 
 		mode: mode,
@@ -36,6 +39,13 @@ module.exports = function(env, argv) {
 
 		module: {
 			rules: [{
+				enforce: 'pre',
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components|lib)/,
+				use: {
+					loader: 'eslint-loader'
+				}
+			}, {
 				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
@@ -47,7 +57,7 @@ module.exports = function(env, argv) {
 		},
 
 		plugins: plugins,
-		devtool:devtool
+		devtool: devtool
 
 	}
 };

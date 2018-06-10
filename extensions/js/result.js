@@ -1,17 +1,17 @@
 import compiler from '../../src/compiler';
 
 const app = {
-    show(elem){
-        if(this.currentElem !== elem){
-            if(this.currentElem){
+    show(elem) {
+        if (this.currentElem !== elem) {
+            if (this.currentElem) {
                 this.currentElem.className = '';
             }
 
             const name = elem.getAttribute('data-name');
-            const program = programs[name];
+            const program = this.programs[name];
             const options = {
-                ignoreConstantError:true,
-                removeUnused:true
+                ignoreConstantError: true,
+                removeUnused: true
             };
             compiler.parseHighlight(program.VERTEX, (error, code) => {
                 this.viewElemVert.innerHTML = code;
@@ -25,15 +25,17 @@ const app = {
             this.currentElem.className = 'active';
         }
     },
-    init(){
-        const viewElemVert = this.viewElemVert = document.getElementById('codeViewVert');        
-        const viewElemFrag = this.viewElemFrag = document.getElementById('codeViewFrag');       
-        const programs = window.programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
-        const names = this.names = Object.keys(programs);
+    init() {
+        this.viewElemVert = document.getElementById('codeViewVert');
+        this.viewElemFrag = document.getElementById('codeViewFrag');
+        const programs = this.programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
+        this.names = Object.keys(programs);
         console.log('programs:', programs);
         this.initMenu();
+
+        window.programs = programs;
     },
-    initMenu(){
+    initMenu() {
         const menuElem = document.getElementById('menu');
         const names = this.names;
         const elems = this.elems = [];
