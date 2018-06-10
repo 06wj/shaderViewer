@@ -1,4 +1,4 @@
-console.log('ShaderViewer init');
+// console.log('ShaderViewer init');
 
 function insertTextScript(text) {
     var script = document.createElement("script");
