@@ -41,15 +41,18 @@ const shake = {
             });
         });
 
-        funcInfoDict.main.called.forEach(name => {
-            calledFunc[name] = true;
-            const funcInfo = funcInfoDict[name];
-            if (funcInfo) {
-                funcInfo.called.forEach(name => {
-                    calledFunc[name] = true;
-                });
-            }
-        });
+        const mainFuncInfo = funcInfoDict.main;
+        if(mainFuncInfo){
+            mainFuncInfo.called.forEach(name => {
+                calledFunc[name] = true;
+                const funcInfo = funcInfoDict[name];
+                if (funcInfo) {
+                    funcInfo.called.forEach(name => {
+                        calledFunc[name] = true;
+                    });
+                }
+            });
+        }
 
         for (name in funcInfoDict) {
             const info = funcInfoDict[name];

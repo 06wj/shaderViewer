@@ -31,5 +31,8 @@
         "js/result.bundle.js",
         "js/popup.js",
         "css/prism.css"
-    ]
+    ],
+    "sandbox":{
+        "pages":["result.html"]
+    }
 }

@@ -1,5 +1,4 @@
 import compiler from '../../src/compiler';
-import exprEval from '@nbxx/nb-expr-eval';
 
 const app = {
     show(elem){
@@ -11,7 +10,8 @@ const app = {
             const name = elem.getAttribute('data-name');
             const program = programs[name];
             const options = {
-                ignoreConstantError:true
+                ignoreConstantError:true,
+                removeUnused:true
             };
             compiler.parseHighlight(program.VERTEX, (error, code) => {
                 this.viewElemVert.innerHTML = code;
@@ -26,7 +26,6 @@ const app = {
         }
     },
     init(){
-        this._injectEval();
         const viewElemVert = this.viewElemVert = document.getElementById('codeViewVert');        
         const viewElemFrag = this.viewElemFrag = document.getElementById('codeViewFrag');       
         const programs = window.programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
@@ -50,38 +49,6 @@ const app = {
         });
 
         this.show(elems[0]);
-    },
-    _injectEval(){
-        const Parser = exprEval.Parser;
-        const parser = new Parser({
-          operators: {
-            // These default to true, but are included to be explicit
-            add: true,
-            concatenate: true,
-            conditional: true,
-            divide: true,
-            factorial: true,
-            multiply: true,
-            power: true,
-            remainder: true,
-            subtract: true,
-
-            // Disable and, or, not, <, ==, !=, etc.
-            logical: true,
-            comparison: true,
-
-            // The in operator is disabled by default in the current version
-            'in': true
-          }
-        });
-
-        window.eval = function(str){
-            str = str.replace(/\|\|/g, ' or ');
-            str = str.replace(/\&\&/g, ' and ');
-            const result = parser.evaluate(str)
-            console.log(str, result);
-            return result;
-        };
     }
 };
 
