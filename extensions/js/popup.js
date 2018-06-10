@@ -19,7 +19,7 @@ function sendMessageToContentScript(message, callback) {
     });
 }
 
-function openViewer(programs){
+function openViewer(programs) {
     window.open('result.html?data=' + encodeURIComponent(JSON.stringify(programs)));
 }
 
@@ -27,16 +27,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('onMessage', request);
     if (request.type === 'SHADER_VIEWER') {
         const event = request.data;
-        if(event){
+        if (event) {
             const type = event.type;
             const data = event.data;
-            switch(type){
+            switch (type) {
                 case 'OPEN_VIEWER':
-                    if(data && data.programs && Object.keys(data.programs).length > 0){
+                    if (data && data.programs && Object.keys(data.programs).length > 0) {
                         openViewer(data.programs);
-                    }
-                    else{
-                        console.warn('no shader detect!')
+                    } else {
+                        sendMessageToContentScript({
+                            type: 'SHADER_VIEWER',
+                            data: {
+                                type: 'LOG_WARN',
+                                data: 'No shader found!'
+                            }
+                        });
                     }
                     break;
             }

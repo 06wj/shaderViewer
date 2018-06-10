@@ -1,6 +1,14 @@
 import glsl from 'glsl-man';
 
 const shake = {
+    /**
+     * shake
+     * @param  {String} code 
+     * @param  {Object} option
+     * @param  {Boolean} option.function
+     * @param  {Boolean} option.struct
+     * @return {Object}  { code, error, errorText }
+     */
     shake(code, option = {}) {
         try {
             const ast = glsl.parse(code);
@@ -12,7 +20,11 @@ const shake = {
                 this._shakeStruct(ast);
             }
 
-            return glsl.string(ast);
+            return {
+                code: glsl.string(ast),
+                error: null,
+                errorText: ''
+            };
         } catch (e) {
             console.warn('shakeError:', e);
             let location = '';
@@ -20,7 +32,11 @@ const shake = {
                 location = `@line:${e.location.start.line},column:${e.location.start.column}`;
             }
 
-            return `// ${e.name}: ${location}\n// ${e.message}\n${code}`;
+            return {
+                code,
+                error: e,
+                errorText: `// ShakeError-${e.name}: ${location}\n// ${e.message}\n`
+            };
         }
     },
     _shakeFunction(ast) {

@@ -52,10 +52,21 @@ const compiler = {
             this.preprocess(preCode, (error, code) => {
                 if (error) {
                     code = `//${error}\n` + preCode;
-                } else if (options.removeUnused) {
-                    code = this.removeUnused(code);
                 } else {
-                    code = this.beautify(code);
+                    let needFormat = true;
+                    if (options.removeUnused) {
+                        const shakeRes = this.removeUnused(code);
+                        if (shakeRes.error) {
+                            code = shakeRes.errorText + code;
+                        } else {
+                            code = shakeRes.code;
+                            needFormat = false;
+                        }
+                    }
+
+                    if (needFormat) {
+                        code = this.beautify(code);
+                    }
                 }
 
                 callback(error, code);

@@ -118,6 +118,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     }, '*');
                 `);
                 break;
+            case 'LOG_LOG':
+                console.log(data.data);
+                break;
+            case 'LOG_WARN':
+                console.warn(data.data);
+                break;
         }
     }
 });
