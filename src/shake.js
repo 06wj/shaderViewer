@@ -55,14 +55,14 @@ const shake = {
                     });
                 }
             });
-        }
 
-        for (let name in funcInfoDict) {
-            const info = funcInfoDict[name];
-            if (info && !calledFunc[name]) {
-                info.nodes.forEach(node => {
-                    glsl.mod.remove(node);
-                });
+            for (let name in funcInfoDict) {
+                const info = funcInfoDict[name];
+                if (info && !calledFunc[name]) {
+                    info.nodes.forEach(node => {
+                        glsl.mod.remove(node);
+                    });
+                }
             }
         }
     },
