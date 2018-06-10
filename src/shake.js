@@ -15,8 +15,12 @@ const shake = {
             return glsl.string(ast);
         } catch (e) {
             console.warn('shakeError:', e);
+            let location = '';
+            if (e.location) {
+                location = `@line:${e.location.start.line},column:${e.location.start.column}`;
+            }
 
-            return `// ${e.name}: @line:${e.location.start.line},column:${e.location.start.column}\n// ${e.message}\n${code}`;
+            return `// ${e.name}: ${location}\n// ${e.message}\n${code}`;
         }
     },
     _shakeFunction(ast) {
