@@ -60,18 +60,18 @@ const shake = {
             });
         });
 
+
+        function markCalled(name) {
+            calledFunc[name] = true;
+            const funcInfo = funcInfoDict[name];
+            if (funcInfo) {
+                funcInfo.called.forEach(markCalled);
+            }
+        }
+
         const mainFuncInfo = funcInfoDict.main;
         if (mainFuncInfo) {
-            mainFuncInfo.called.forEach(name => {
-                calledFunc[name] = true;
-                const funcInfo = funcInfoDict[name];
-                if (funcInfo) {
-                    funcInfo.called.forEach(name => {
-                        calledFunc[name] = true;
-                    });
-                }
-            });
-
+            markCalled('main');
             for (let name in funcInfoDict) {
                 const info = funcInfoDict[name];
                 if (info && !calledFunc[name]) {
@@ -118,7 +118,7 @@ const shake = {
                 usedTypeDict[name] = true;
             }
         });
-
+        
         parameterResult.forEach(parameterNode => {
             const typeName = parameterNode.type_name;
             usedTypeDict[typeName] = true;
