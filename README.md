@@ -6,15 +6,15 @@ Preprocess and format the shader code.
 * Remove unused function, struct...
 * Format
 
-### demo
+### Chrome Extensions
+[chrome extensions.crx](https://github.com/06wj/shaderViewer/blob/dev/extensions.crx?raw=true)
+
+### Online Demo
 [https://06wj.github.io/shaderViewer/demo/](https://06wj.github.io/shaderViewer/demo/)
 
 ![](https://gw.alicdn.com/tfs/TB1lkmzuL1TBuNjy0FjXXajyXXa-1170-1254.png_600x600.jpg)
 
-### chrome extensions
-[chrome extensions.crx](https://github.com/06wj/shaderViewer/blob/dev/extensions.crx?raw=true)
-
-### dev
+### Dev
 * run `npm install` to install dependencies
 * run `npm run dev` to watch and develop
 * run `npm run build` to build
