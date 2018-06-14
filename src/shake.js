@@ -64,7 +64,7 @@ const shake = {
         function markCalled(name) {
             calledFunc[name] = true;
             const funcInfo = funcInfoDict[name];
-            if (funcInfo) {
+            if (funcInfo && !calledFunc[name]) {
                 funcInfo.called.forEach(markCalled);
             }
         }
