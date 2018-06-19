@@ -41,9 +41,7 @@ const shake = {
     },
     _shakeFunction(ast) {
         const funcInfoDict = {};
-        const calledFunc = {
-            main: true
-        };
+        const calledFunc = {};
 
         glsl.query.all(ast, glsl.query.selector('function_declaration')).forEach(functionDefNode => {
             const name = functionDefNode.name;
@@ -62,16 +60,21 @@ const shake = {
 
 
         function markCalled(name) {
-            calledFunc[name] = true;
             const funcInfo = funcInfoDict[name];
-            if (funcInfo && !calledFunc[name]) {
-                funcInfo.called.forEach(markCalled);
+            if (funcInfo) {
+                const isCalled = calledFunc[name];
+                if (!isCalled) {
+                    calledFunc[name] = true;
+                    funcInfo.called.forEach(markCalled);
+                }
             }
         }
+
 
         const mainFuncInfo = funcInfoDict.main;
         if (mainFuncInfo) {
             markCalled('main');
+
             for (let name in funcInfoDict) {
                 const info = funcInfoDict[name];
                 if (info && !calledFunc[name]) {
@@ -118,7 +121,7 @@ const shake = {
                 usedTypeDict[name] = true;
             }
         });
-        
+
         parameterResult.forEach(parameterNode => {
             const typeName = parameterNode.type_name;
             usedTypeDict[typeName] = true;
