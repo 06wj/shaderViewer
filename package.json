@@ -1,7 +1,7 @@
 {
   "name": "shader-compiler",
-  "version": "1.0.6",
-  "description": "",
+  "version": "1.0.7",
+  "description": "Preprocess and format the shader code",
   "main": "dist/shaderCompiler.bundle.js",
   "dependencies": {
     "events": "^3.0.0",
@@ -25,6 +25,7 @@
     "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "runkitExampleFilename":"demo/runkit.js",
   "author": "06wj",
   "license": "MIT"
 }
