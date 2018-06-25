@@ -40,7 +40,8 @@ module.exports = function(env, argv) {
 			filename: '[name].bundle.js',
 			path: path.resolve(__dirname, ''),
 			library: 'shaderCompiler',
-			libraryTarget: 'umd'
+			libraryTarget: 'umd',
+			globalObject: 'typeof self !== \'undefined\' ? self : this'
 		},
 
 		module: {
