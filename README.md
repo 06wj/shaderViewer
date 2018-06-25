@@ -15,7 +15,7 @@ Preprocess and format the shader code.
 ![](https://gw.alicdn.com/tfs/TB1lkmzuL1TBuNjy0FjXXajyXXa-1170-1254.png_600x600.jpg)
 
 ### Module Usage
-* import  modules
+* import modules
   ```
   const compiler = require('shader-compiler').compiler;
   const shake = require('shader-compiler').shake;

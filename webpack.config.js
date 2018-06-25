@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const pkg = require('./package.json');
 
 /*
  * We've enabled UglifyJSPlugin for you! This minifies your app
@@ -17,16 +18,19 @@ module.exports = function(env, argv) {
 
 	console.log(`webpack-mode:${mode}`);
 
-	const devtool = isDev ? 'none' : 'cheap-source-map';
-	const plugins = [];
-	if(!isDev){
+	const devtool = isDev ? 'none' : 'none';
+
+	const plugins = [new webpack.DefinePlugin({
+		SHADER_COMPILER_VERSION: JSON.stringify(pkg.version)
+	})];
+
+	if (!isDev) {
 		plugins.push(new UglifyJSPlugin())
 	}
 
 	return {
 		entry: {
-			'dist/app': './demo/app',
-			'dist/compiler': './src/index',
+			'dist/shaderCompiler': './src/index',
 			'extensions/js/result': './extensions/js/result'
 		},
 
@@ -34,7 +38,9 @@ module.exports = function(env, argv) {
 
 		output: {
 			filename: '[name].bundle.js',
-			path: path.resolve(__dirname, '')
+			path: path.resolve(__dirname, ''),
+			library: 'shaderCompiler',
+			libraryTarget: 'umd'
 		},
 
 		module: {
