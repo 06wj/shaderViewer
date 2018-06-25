@@ -14,6 +14,48 @@ Preprocess and format the shader code.
 
 ![](https://gw.alicdn.com/tfs/TB1lkmzuL1TBuNjy0FjXXajyXXa-1170-1254.png_600x600.jpg)
 
+### Module Usage
+* import  modules
+  ```
+  const compiler = require('shader-compiler').compiler;
+  const shake = require('shader-compiler').shake;
+  ```
+
+* set the ```options```
+  ```
+  const options = {
+      removeUnused: true,
+      ignoreConstantError: true
+  };
+  ```
+
+* preprocess the code
+  ```
+  compiler.preprocess(code, function(error, result){  
+
+  }, options);
+  ```
+
+* parse: preprocess => shake => format => result
+  ```
+  compiler.parse(code, function(error, result){  
+
+  }, options);
+  ```
+
+* parseHighlight: preprocess => shake => format => hightlight => result
+
+  ```
+  compiler.parseHighlight(code, function(error, result){
+  
+  }, options);
+  ```
+
+* shake the code( code must be preprocessed )
+  ```
+  shake.shake(code, {function:true, struct:true});
+  ```
+
 ### Dev
 * run `npm install` to install dependencies
 * run `npm run dev` to watch and develop

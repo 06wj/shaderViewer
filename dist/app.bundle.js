@@ -81,78 +81,50 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./extensions/js/result.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./demo/app.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./extensions/js/result.js":
-/*!*********************************!*\
-  !*** ./extensions/js/result.js ***!
-  \*********************************/
+/***/ "./demo/app.js":
+/*!*********************!*\
+  !*** ./demo/app.js ***!
+  \*********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _index = __webpack_require__(/*! ../../src/index */ "./src/index.js");
+var _index = __webpack_require__(/*! ../src/index */ "./src/index.js");
 
 var app = {
-    show: function show(elem) {
+    show: function show() {
         var _this = this;
 
-        if (this.currentElem !== elem) {
-            if (this.currentElem) {
-                this.currentElem.className = '';
-            }
+        var preCode = this.codeElem.value;
+        var options = {
+            ignoreConstantError: false,
+            removeUnused: true
+        };
 
-            var name = elem.getAttribute('data-name');
-            var program = this.programs[name];
-            var options = {
-                ignoreConstantError: true,
-                removeUnused: true
-            };
-            _index.compiler.parseHighlight(program.VERTEX, function (error, code) {
-                _this.viewElemVert.innerHTML = code;
-            }, options);
-
-            _index.compiler.parseHighlight(program.FRAGMENT, function (error, code) {
-                _this.viewElemFrag.innerHTML = code;
-            }, options);
-
-            this.currentElem = elem;
-            this.currentElem.className = 'active';
-        }
+        _index.compiler.parseHighlight(preCode, function (error, code) {
+            _this.viewElem.innerHTML = code;
+        }, options);
     },
     init: function init() {
-        this.viewElemVert = document.getElementById('codeViewVert');
-        this.viewElemFrag = document.getElementById('codeViewFrag');
-        var programs = this.programs = JSON.parse(decodeURIComponent(location.href.split('?data=')[1]));
-        this.names = Object.keys(programs);
-        console.log('programs:', programs);
-        this.initMenu();
+        this.codeElem = document.getElementById('code');
+        this.viewElem = document.getElementById('codeView');
 
-        window.programs = programs;
+        this.bindEvent();
+        this.show();
     },
-    initMenu: function initMenu() {
+    bindEvent: function bindEvent() {
         var _this2 = this;
 
-        var menuElem = document.getElementById('menu');
-        var names = this.names;
-        var elems = this.elems = [];
-        names.forEach(function (name) {
-            var elem = document.createElement('li');
-            elem.innerHTML = name;
-            elem.setAttribute('data-name', name);
-            elem.addEventListener('click', function () {
-                _this2.show(elem);
-            });
-            elems.push(elem);
-            menuElem.appendChild(elem);
-        });
-
-        this.show(elems[0]);
+        this.codeElem.oninput = function () {
+            _this2.show();
+        };
     }
 };
 

@@ -25,8 +25,8 @@ module.exports = function(env, argv) {
 
 	return {
 		entry: {
-			'dist/main': './src/index',
-			'dist/compiler': './src/compiler',
+			'dist/app': './demo/app',
+			'dist/compiler': './src/index',
 			'extensions/js/result': './extensions/js/result'
 		},
 
