@@ -1,8 +1,9 @@
 {
   "name": "shader-compiler",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Preprocess and format the shader code",
   "main": "dist/shaderCompiler.bundle.js",
+  "keywords":["shader", "preprocess", "compiler", "glsl"],
   "dependencies": {
     "events": "^3.0.0",
     "glsl-man": "^1.1.14",
