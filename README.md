@@ -8,7 +8,7 @@ Preprocess and format the shader code.
 
 ### Chrome Extensions
 [Chrome Extensions.crx](https://github.com/06wj/shaderViewer/blob/dev/extensions.crx?raw=true)  
-This extension can automatically detect the shader of the current page and preprocess it.
+This extension can automatically detect the shader of the current page, then preprocess and show it in the panel.
 
 ### Online Demo
 [https://06wj.github.io/shaderViewer/demo/](https://06wj.github.io/shaderViewer/demo/)
