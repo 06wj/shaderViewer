@@ -18,8 +18,8 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-import": "^2.9.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.10.2",
-    "webpack-cli": "^2.1.4"
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1"
   },
   "scripts": {
     "dev": "webpack -w --env.development",
