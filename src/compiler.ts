@@ -60,7 +60,7 @@ const compiler = {
 
         return shake.shake(code, options);
     },
-    hightlight(code: string): string {
+    highlight(code: string): string {
         code = '\n' + code;
 
         return Prism.highlight(code, Prism.languages.glsl, 'glsl');
@@ -103,8 +103,8 @@ const compiler = {
         options?: PreprocessOptions
     ): void {
         this.parse(preCode, (error, code) => {
-            const hightlightCode = this.hightlight(code);
-            callback(error, hightlightCode);
+            const highlightCode = this.highlight(code);
+            callback(error, highlightCode);
         }, options);
     }
 };
