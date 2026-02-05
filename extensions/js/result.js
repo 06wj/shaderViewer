@@ -1,4 +1,4 @@
-import { compiler } from '../../src/index';
+import { compiler } from '../../src/index.ts';
 
 const app = {
     show(elem) {
