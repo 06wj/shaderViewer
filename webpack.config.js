@@ -31,6 +31,7 @@ module.exports = function(env, argv) {
 	return {
 		entry: {
 			'dist/shaderCompiler': './src/index.ts',
+			'demo/app': './demo/app.ts',
 			'extensions/js/result': './extensions/js/result'
 		},
 
