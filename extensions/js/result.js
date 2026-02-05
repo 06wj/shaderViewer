@@ -10,15 +10,14 @@ const app = {
             const name = elem.getAttribute('data-name');
             const program = this.programs[name];
             const options = {
-                ignoreConstantError: true,
-                removeUnused: true
+                constants: {}
             };
-            compiler.parseHighlight(program.VERTEX, (error, code) => {
-                this.viewElemVert.innerHTML = code;
+            compiler.preprocess(program.VERTEX, (error, code) => {
+                this.viewElemVert.textContent = code || `Error: ${error}`;
             }, options);
 
-            compiler.parseHighlight(program.FRAGMENT, (error, code) => {
-                this.viewElemFrag.innerHTML = code;
+            compiler.preprocess(program.FRAGMENT, (error, code) => {
+                this.viewElemFrag.textContent = code || `Error: ${error}`;
             }, options);
 
             this.currentElem = elem;
