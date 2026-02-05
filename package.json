@@ -1,15 +1,19 @@
 {
   "name": "shader-compiler",
   "version": "1.0.9",
-  "description": "Preprocess and format the shader code",
+  "description": "Preprocess GLSL shader code",
   "main": "dist/shaderCompiler.bundle.js",
-  "keywords":["shader", "preprocess", "compiler", "glsl"],
+  "keywords": [
+    "shader",
+    "preprocess",
+    "compiler",
+    "glsl"
+  ],
   "dependencies": {
-    "events": "^3.0.0",
-    "glsl-man": "^1.1.14",
-    "js-beautify": "^1.7.5"
+    "@shaderfrog/glsl-parser": "^6.1.0"
   },
   "devDependencies": {
+    "@types/node": "^25.2.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
@@ -17,16 +21,18 @@
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-import": "^2.9.0",
+    "ts-loader": "^8.4.0",
+    "typescript": "^5.9.3",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1"
   },
   "scripts": {
-    "dev": "webpack -w --env.development",
-    "build": "webpack -p",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider webpack -w --env.development",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "runkitExampleFilename":"demo/runkit.js",
+  "runkitExampleFilename": "demo/runkit.ts",
   "author": "06wj",
   "license": "MIT"
 }

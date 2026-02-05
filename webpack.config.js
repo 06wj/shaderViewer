@@ -30,7 +30,8 @@ module.exports = function(env, argv) {
 
 	return {
 		entry: {
-			'dist/shaderCompiler': './src/index',
+			'dist/shaderCompiler': './src/index.ts',
+			'demo/app': './demo/app.ts',
 			'extensions/js/result': './extensions/js/result'
 		},
 
@@ -44,6 +45,10 @@ module.exports = function(env, argv) {
 			globalObject: 'typeof self !== \'undefined\' ? self : this'
 		},
 
+		resolve: {
+			extensions: ['.ts', '.tsx', '.js']
+		},
+
 		module: {
 			rules: [{
 				enforce: 'pre',
@@ -52,6 +57,10 @@ module.exports = function(env, argv) {
 				use: {
 					loader: 'eslint-loader'
 				}
+			}, {
+				test: /\.tsx?$/,
+				exclude: /node_modules/,
+				use: 'ts-loader'
 			}, {
 				test: /\.js$/,
 				exclude: /node_modules/,
