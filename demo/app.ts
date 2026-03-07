@@ -1,6 +1,7 @@
 import compiler from '../src/compiler';
 
 declare const Prism: any;
+declare const formatGLSL: (code: string) => string;
 
 interface App {
     codeElem: HTMLTextAreaElement;
@@ -24,7 +25,7 @@ const app: App = {
             if (error) {
                 this.viewElem.textContent = `Error: ${error}`;
             } else {
-                this.viewElem.textContent = code || '';
+                this.viewElem.textContent = formatGLSL(code || '');
             }
             Prism.highlightElement(this.viewElem);
         }, options);
