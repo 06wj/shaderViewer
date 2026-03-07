@@ -10,7 +10,7 @@
     "glsl"
   ],
   "dependencies": {
-    "@shaderfrog/glsl-parser": "^6.1.0"
+    "@shaderfrog/glsl-parser": "^7.0.0"
   },
   "devDependencies": {
     "@types/node": "^25.2.0",
@@ -28,8 +28,8 @@
     "webpack-cli": "^3.1.1"
   },
   "scripts": {
-    "dev": "NODE_OPTIONS=--openssl-legacy-provider webpack -w --env.development",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack -p",
+    "dev": "webpack -w --env.development",
+    "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "runkitExampleFilename": "demo/runkit.ts",

@@ -1,5 +1,6 @@
-// Import the compiler from the built bundle
-declare const shaderCompiler: any;
+import compiler from '../src/compiler';
+
+declare const Prism: any;
 
 interface App {
     codeElem: HTMLTextAreaElement;
@@ -19,12 +20,13 @@ const app: App = {
             constants: {}
         };
 
-        shaderCompiler.compiler.preprocess(preCode, (error: string | null, code: string | null) => {
+        compiler.preprocess(preCode, (error: string | null, code: string | null) => {
             if (error) {
                 this.viewElem.textContent = `Error: ${error}`;
             } else {
                 this.viewElem.textContent = code || '';
             }
+            Prism.highlightElement(this.viewElem);
         }, options);
     },
     
